@@ -153,8 +153,18 @@
 
 + 显示远程仓库origin的详细信息，包括 URL 和跟踪分支
 
-  `git remote show origin`
+    `git remote show origin`
 
 ### 8. 使用终端添加内容为“this is test”的文件REMADE.md
 
     `echo "this is test" >> REMADE.md`
+    
+### 9.与远程仓库交互时遇到的问题
++ Push failed remote HTTP Basic Access denied Authentication failed
+
+     在本地仓库版本使用git push提交的远程仓库报错：Push failed remote HTTP Basic Access denied Authentication failed
+
+     着重注意当前git的个人配置中，账户名，邮箱和密码与与远程仓库是否一致
+  
+![image.png](https://upload-images.jianshu.io/upload_images/29476859-d20efa3a225794ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
