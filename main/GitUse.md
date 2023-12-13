@@ -1,4 +1,21 @@
-# git命令
+# Git 概述
+
+1. Git 的工作就是创建和保存你项目的快照及与之后的快照进行对比
+
+2. git 一共有四个部分
+   + workspace：工作区
+   + staging area：暂存区/缓存区
+   + local repository：版本库或本地仓库
+   + remote repository：远程仓库
+
+3. git 的基本工作流程
+
+![image.png](https://upload-images.jianshu.io/upload_images/29476859-29a4e41c6f11ff6f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+   git 的基本工作流如上图所示
+
+# Git 命令
+
 ### 1.git 安装及版本查看
 
 + git 的平台安装地址为：[http://git-scm.com/downloads](http://git-scm.com/downloads)
