@@ -31,19 +31,19 @@ IOC全称 Inversion of Control ，名为 控制反转，是面向对象编程的
 
 ``` 
 public class Car
+{
+    private Engine engine;
+
+    public Car()
     {
-        private Engine engine;
-
-        public Car()
-        {
-            engine = new Engine(); // 直接实例化引擎对象
-        }
-
-        public void Start()
-        {
-            engine.Start();
-        }
+        engine = new Engine(); // 直接实例化引擎对象
     }
+
+    public void Start()
+    {
+        engine.Start();
+    }
+}
 ```
 
 上述代码中，Car 类直接创建了一个 Engine 对象，并在需要的时候调用其 Start 方法。
@@ -54,40 +54,40 @@ public class Car
 
 ```
 public interface IEngine
-    {
-        void Start();
-    }
+{
+    void Start();
+}
 ```
      
 然后，我们实现一个具体的引擎类，实现该接口：
 
 ```
 public class Engine : IEngine
+{
+    public void Start()
     {
-        public void Start()
-        {
-            Console.WriteLine("Engine started.");
-        }
+        Console.WriteLine("Engine started.");
     }
+}
 ```
        
 接下来，在汽车类中通过构造函数注入依赖的引擎对象：
 
 ```
  public class Car
+{
+    private IEngine engine;
+    
+    public Car(IEngine engine)
     {
-        private IEngine engine;
-        
-        public Car(IEngine engine)
-        {
-            this.engine = engine; // 通过构造函数注入引擎对象
-        }
-        
-        public void Start()
-        {
-            engine.Start();
-        }
+        this.engine = engine; // 通过构造函数注入引擎对象
     }
+    
+    public void Start()
+    {
+        engine.Start();
+    }
+}
 ```
        
 现在，汽车类（Car）并不直接依赖于具体的引擎类（Engine），而是依赖于一个引擎接口（IEngine）。这样，在创建汽车对象时，我们可以通过IOC容器来自动解析并注入具体的引擎实例。
@@ -158,12 +158,12 @@ public class MyService
 
 ```
  public class MyService
+{
+    public void SetDependency(IDependency dependency)
     {
-        public void SetDependency(IDependency dependency)
-        {
-            //...
-        }
+        //...
     }
+}
 ```
 
 通过公共方法接收依赖的接口或抽象类作为参数，将依赖对象传递进来。在使用 MyService 类时，依赖对象可以通过调用方法进行注入
