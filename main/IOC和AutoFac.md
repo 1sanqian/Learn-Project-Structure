@@ -29,67 +29,82 @@ IOC全称 Inversion of Control ，名为 控制反转，是面向对象编程的
 
 在传统的编码方式中，汽车对象通常会直接创建并依赖于一个具体的引擎对象。这种情况下，汽车类需要直接实例化并控制引擎对象的创建和生命周期。
 
-     public class Car
-       {
-           private Engine engine;
+``` 
+public class Car
+    {
+        private Engine engine;
 
-           public Car()
-            {
-               engine = new Engine(); // 直接实例化引擎对象
-             }
+        public Car()
+        {
+            engine = new Engine(); // 直接实例化引擎对象
+        }
 
-            public void Start()
-            {
-               engine.Start();
-             }
-       }
+        public void Start()
+        {
+            engine.Start();
+        }
+    }
+```
+
 上述代码中，Car 类直接创建了一个 Engine 对象，并在需要的时候调用其 Start 方法。
 
 然而，使用IOC和依赖注入的方式，我们可以将引擎对象的创建和管理交给外部的IOC容器来处理，将依赖关系解耦。
 
 首先，我们需要定义一个接口来表示引擎（Engine）的功能：
 
-        public interface IEngine
-        {
+```
+public interface IEngine
+    {
         void Start();
-        }
+    }
+```
+     
 然后，我们实现一个具体的引擎类，实现该接口：
 
-        public class Engine : IEngine
+```
+public class Engine : IEngine
+    {
+        public void Start()
         {
-          public void Start()
-          {
-           Console.WriteLine("Engine started.");
-           }
+            Console.WriteLine("Engine started.");
         }
+    }
+```
+       
 接下来，在汽车类中通过构造函数注入依赖的引擎对象：
 
-        public class Car
-        {
+```
+ public class Car
+    {
         private IEngine engine;
         
-            public Car(IEngine engine)
-            {
-                this.engine = engine; // 通过构造函数注入引擎对象
-            }
-        
-            public void Start()
-            {
-                engine.Start();
-            }
+        public Car(IEngine engine)
+        {
+            this.engine = engine; // 通过构造函数注入引擎对象
         }
+        
+        public void Start()
+        {
+            engine.Start();
+        }
+    }
+```
+       
 现在，汽车类（Car）并不直接依赖于具体的引擎类（Engine），而是依赖于一个引擎接口（IEngine）。这样，在创建汽车对象时，我们可以通过IOC容器来自动解析并注入具体的引擎实例。
 
 例如，在使用Autofac作为IOC容器的情况下，我们可以进行如下配置：
 
-        var containerBuilder = new ContainerBuilder();
-        containerBuilder.RegisterType<Engine>().As<IEngine>(); // 注册引擎类型
-        containerBuilder.RegisterType<Car>(); // 注册汽车类型
+```
+    var containerBuilder = new ContainerBuilder();
+    containerBuilder.RegisterType<Engine>().As<IEngine>(); // 注册引擎类型
+    containerBuilder.RegisterType<Car>(); // 注册汽车类型
         
-        var container = containerBuilder.Build(); // 构建容器
+    var container = containerBuilder.Build(); // 构建容器
         
-        var car = container.Resolve<Car>(); // 从容器中解析出汽车对象
-        car.Start(); // 调用汽车的启动方法
+    var car = container.Resolve<Car>(); // 从容器中解析出汽车对象
+    car.Start(); // 调用汽车的启动方法
+```
+        
 通过上述配置和解析步骤，Autofac会自动创建一个Car对象，并将一个具体的Engine对象注入到Car对象的构造函数中。这样，Car对象就能够使用注入的引擎对象进行启动操作。
 
 这个例子展示了使用IOC和依赖注入的方式，将对象之间的依赖关系解耦，提高了代码的可测试性和可扩展性。通过IOC容器的帮助，我们不需要手动创建和管理对象的依赖关系，而是将这个任务交给容器来完成。
@@ -111,64 +126,70 @@ IOC全称 Inversion of Control ，名为 控制反转，是面向对象编程的
 
 1. 构造函数注入
 
-   通过在构造函数中声明依赖对象的参数列表的方法来实现依赖注入
+通过在构造函数中声明依赖对象的参数列表的方法来实现依赖注入
 
-        public class MyService
-        {
-           private readonly IDependency _dependency;
+```
+public class MyService
+{
+    private readonly IDependency _dependency;
 
-          public MyService(IDependency dependency)
-              {
-                _dependency = dependency;
+    public MyService(IDependency dependency)
+    {
+        _dependency = dependency;
 
-         }
+    }
+}
+```
 
-   在构造函数中声明依赖的接口或抽象类，通过构造函数参数将依赖对象传递进来。在使用 MyService 类时，依赖对象会被自动注入
-
+在构造函数中声明依赖的接口或抽象类，通过构造函数参数将依赖对象传递进来。在使用 MyService 类时，依赖对象会被自动注入
 
 2. setter 方法注入
 
-           public class MyService
-            { 
-              public IDependency Dependency { get; set; }
-            }
+```
+public class MyService
+{ 
+    public IDependency Dependency { get; set; }
+}
+```
 
-    通过公共属性声明依赖的接口或抽象类，并提供 setter 方法。在使用 MyService 类时，依赖对象会被自动注入到属性中
-
+通过公共属性声明依赖的接口或抽象类，并提供 setter 方法。在使用 MyService 类时，依赖对象会被自动注入到属性中
 
 3. 方法注入
 
-        public class MyService
-         {
-           public void SetDependency(IDependency dependency)
-           {
-           //...
-            }
-          }
-    通过公共方法接收依赖的接口或抽象类作为参数，将依赖对象传递进来。在使用 MyService 类时，依赖对象可以通过调用方法进行注入
+```
+ public class MyService
+    {
+        public void SetDependency(IDependency dependency)
+        {
+            //...
+        }
+    }
+```
 
+通过公共方法接收依赖的接口或抽象类作为参数，将依赖对象传递进来。在使用 MyService 类时，依赖对象可以通过调用方法进行注入
 
 4.  接口注入
-  
-         public class MyService
-           {
-           private readonly IServiceLocator _serviceLocator;
+  ``` 
+public class MyService
+{
+    private readonly IServiceLocator _serviceLocator;
 
-            public MyService(IServiceLocator serviceLocator)
-             {
-                _serviceLocator = serviceLocator;
-              }
+    public MyService(IServiceLocator serviceLocator)
+    {
+        _serviceLocator = serviceLocator;
+    }
 
-            public void DoSomething()
-             {
-                IDependency dependency = _serviceLocator.Resolve<IDependency>();
-                 // 使用依赖对象进行操作
-             }
+    public void DoSomething()
+    {
+        IDependency dependency = _serviceLocator.Resolve<IDependency>();
+        // 使用依赖对象进行操作
+    }
 
-               // ...
-           }
+    // ...
+}
+ ```
 
-    通过一个服务定位器接口或类，在需要使用依赖对象的地方通过解析器方法获取依赖对象
+通过一个服务定位器接口或类，在需要使用依赖对象的地方通过解析器方法获取依赖对象
 
 ### 三. AutoFac
 
@@ -209,128 +230,132 @@ ContainerBuilder 是 AutoFac 中的一个类，它用于构建依赖注入容器
 
 下面是一个简单的示例，展示如何使用 ContainerBuilder 创建一个简单的容器并注册依赖关系：
 
-        using Autofac;
+```
+using Autofac;
 
-        class Program
-        {
-        static void Main(string[] args)
-        {
+class Program
+{
+    static void Main(string[] args)
+    {
         // 创建 ContainerBuilder
         var builder = new ContainerBuilder();
-        
-                // 注册类型映射关系
-                builder.RegisterType<MyDependency>().As<IDependency>();
-        
-                // 构建容器
-                var container = builder.Build();
-        
-                // 从容器中解析所需的对象
-                var dependency = container.Resolve<IDependency>();
-        
-                // 使用依赖对象 DoSomething() 是对应具体的的方法名
-                dependency.DoSomething();
-        
-                Console.ReadLine();
-            }
-        }
-        
-        public interface IDependency
-        {
-        void DoSomething();
-        }
-        
-        public class MyDependency : IDependency
-        {
-        public void DoSomething()
-        {
+    
+        // 注册类型映射关系
+        builder.RegisterType<MyDependency>().As<IDependency>();
+    
+        // 构建容器
+        var container = builder.Build();
+    
+        // 从容器中解析所需的对象
+        var dependency = container.Resolve<IDependency>();
+    
+        // 使用依赖对象 DoSomething() 是对应具体的的方法名
+        dependency.DoSomething();
+    
+        Console.ReadLine();
+    }
+}
+    
+public interface IDependency
+{
+    void DoSomething();
+}
+    
+public class MyDependency : IDependency
+{
+    public void DoSomething()
+    {
         Console.WriteLine("Doing something.");
-        }
-        }
+    }
+} 
+```
+
 在上述示例中，我们创建了一个 ContainerBuilder 对象 builder，然后调用 builder.RegisterType<MyDependency>().As<IDependency>() 方法来注册 MyDependency 类作为 IDependency 接口的实现类。
 
 最后，我们调用 builder.Build() 方法构建容器，然后通过容器的 Resolve<IDependency>() 方法从容器中解析出 IDependency 类型的对象。
 
 使用 ContainerBuilder 可以方便地注册和配置依赖关系，它是 AutoFac 中的一个重要组件，用于构建和配置依赖注入容器。
 
-
-
-
 ### Example
+
 一个完整的 “汽车（Car）和引擎（Engine）之间的关系，并使用 AutoFac 进行依赖注入，并指定了对象的生命周期”  的例子
 
 1. 定义接口和类：
 
-            public interface IEngine
-            {
-            void Start();
-            void Stop();
-            }
-            
-            public interface ICar
-            {
-            void Drive();
-            }
-            
-            public class Engine : IEngine
-            {
-            public void Start()
-            {
-            Console.WriteLine("Engine started.");
-            }
-            
-                public void Stop()
-                {
-                    Console.WriteLine("Engine stopped.");
-                }
-            }
-            
-            public class Car : ICar
-            {
-            private readonly IEngine _engine;
-            
-                public Car(IEngine engine)
-                {
-                    _engine = engine;
-                }
-            
-                public void Drive()
-                {
-                    _engine.Start();
-                    Console.WriteLine("Car is driving.");
-                    _engine.Stop();
-                }
-            }
+```
+public interface IEngine
+{
+    void Start();
+    void Stop();
+}
+
+public inter face ICar
+{
+    void Drive();
+}
+
+public class Engine : IEngine
+{
+    public void Start()
+    {
+        Console.WriteLine("Engine started.");
+    }
+
+    public void Stop()
+    {
+        Console.WriteLine("Engine stopped.");
+    }
+}
+
+public class Car : ICar
+{
+    private readonly IEngine _engine;
+
+    public Car(IEngine engine)
+    {
+        _engine = engine;
+    }
+
+    public void Drive()
+    {
+        _engine.Start();
+        Console.WriteLine("Car is driving.");
+        _engine.Stop();
+    }
+}
+```
 
 2. 配置 AutoFac 容器：
 
-        using Autofac;
-      
-        class Program
-        {
-        static void Main(string[] args)
-        {
+```
+using Autofac;
+  
+class Program
+{
+    static void Main(string[] args)
+    {
         // 创建 AutoFac 容器构建器
         var builder = new ContainerBuilder();
-        
-                // 注册接口和实现类
-                builder.RegisterType<Engine>().As<IEngine>().SingleInstance();
-                builder.RegisterType<Car>().As<ICar>();
-        
-                // 构建容器
-                var container = builder.Build();
-        
-                // 从容器中解析所需的对象
-                using (var scope = container.BeginLifetimeScope())
-                {
-                    var car = scope.Resolve<ICar>();
-        
-                    // 使用汽车对象
-                    car.Drive();
-                }
-        
-                Console.ReadLine();
-            }
+    
+        // 注册接口和实现类
+        builder.RegisterType<Engine>().As<IEngine>().SingleInstance();
+        builder.RegisterType<Car>().As<ICar>();
+    
+        // 构建容器
+        var container = builder.Build();
+    
+        // 从容器中解析所需的对象
+        using (var scope = container.BeginLifetimeScope())
+        {
+            var car = scope.Resolve<ICar>();
+    
+            // 使用汽车对象
+            car.Drive();
         }
-
+    
+        Console.ReadLine();
+    }
+}
+```   
 
 ps： 本文部分代码来源网络，知识点解读存在一定局限性
