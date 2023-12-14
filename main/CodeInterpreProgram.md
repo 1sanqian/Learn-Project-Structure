@@ -10,12 +10,13 @@
 ### 一. 代码解读
 
 1. 这段代码主要用 ConfigurationBuilder 构建一个实例对象 configuration
-       
-       var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
-            .AddEnvironmentVariables()
-            .Build();
-
+    
+```
+ var configuration = new ConfigurationBuilder()
+      .AddJsonFile("appsettings.json")
+      .AddEnvironmentVariables()
+      .Build();
+```   
 
    + new ConfigurationBuilder() 创建该类型实例对象
    + AddJsonFile（"appsettings.json"）是给 configuration 配置一个 名为 “appsettings.json” 的配置文件
@@ -24,10 +25,13 @@
 
 2. 这段代码的主要作用是创建一个应用程序的主机环境，并配置了 Web 主机的默认设置，包括加载通用配置、配置日志记录器、配置依赖注入容器，以及指定了一个 Startup 类作为应用程序的启动类
 
+
+```
        public static IHostBuilder CreateHostBuilder(string[] args) =>
              Host.CreateDefaultBuilder(args)
              .ConfigureWebHostDefaults(webBuilder  => 
              { webBuilder.UseStartup<Startup>(); });
+```
 
 +  这个方法最终会返回一个 IHostBuilder 实例， 即 应用程序的主机环境构建器
 +  Host 类 用一种统一的方式启动，停止和管理应用程序的生命周期
@@ -48,21 +52,17 @@
 
    AddJsonFile("appsettings.json")：向 ConfigurationBuilder 添加一个 JSON 配置文件作为配置源
 
-
 3. appsettings.json
 
    appsettings.json通常包含应用程序的配置信息，例如数据库连接字符串、日志级别等 
 
-
 4. AddEnvironmentVariables
 
    AddEnvironmentVariables() 是 ConfigurationBuilder 类中的一个方法，用于将环境变量添加为配置源。
-    
 
 5. Build()
 
    执行配置构建操作，将添加的配置源整合成一个，最终返回一个 对应数据类型 实例配置对象
-
 
 6. Host 
 
@@ -79,7 +79,6 @@
    CreateDefaultBuilder 创建基本配置
 
    ConfigureWebHostDefaults 对 web 主机的基本配置进行 自定义配置
-
 
 ps:本文知识点解读存在一定局限性
 
