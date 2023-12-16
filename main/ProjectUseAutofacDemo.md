@@ -10,11 +10,7 @@
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-a047a276d2460c1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-下载安装之后, 还需要下载 Microsoft.EntityFrameworkCore 对Autofac 进行生命周期的配置
-
-![image.png](https://upload-images.jianshu.io/upload_images/29476859-3f269254180a00b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-在项目的Program.cs文件配置 Autofac 作为服务提供程序工厂
+下载安装之后,在项目的Program.cs文件配置 Autofac 作为服务提供程序工厂
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-8bda4dd737b91cc4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
