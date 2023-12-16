@@ -10,15 +10,15 @@
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-a047a276d2460c1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-下载安装之后, 还需要下载 Microsoft.EntityFrameworkCore 对Autofac 进行生命周期的配置，以及Pomelo.EntityFrameworkCore.MySql 用于Entity Framework Core 项目 进行与 MySQL 数据库的交互操作
+下载安装之后, 还需要下载 Microsoft.EntityFrameworkCore 对Autofac 进行生命周期的配置
 
-![image.png](https://upload-images.jianshu.io/upload_images/29476859-015a198d988fdd92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![image.png](https://upload-images.jianshu.io/upload_images/29476859-3f269254180a00b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 在项目的Program.cs文件配置 Autofac 作为服务提供程序工厂
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-8bda4dd737b91cc4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-在项目的Startup.cs 文件通过builder.RegisterModule  注册一个PractiseForFreyaModule 的自定义模块控制器，该模块的构造函数接受应用程序的配置信息和 PractiseForFreyaModule 类型所在的程序集。
+在项目的Startup.cs 文件通过builder.RegisterModule  注册一个PractiseForFreyaModule 的自定义模块控制器，该模块的构造函数接受应用程序的配置信息和 PractiseForFreyaModule 类型所在的程序集
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-d845e4fc16b21fd5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
