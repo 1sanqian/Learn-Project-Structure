@@ -84,6 +84,8 @@ public class MyModule : Module
 在项目的的控制层文件Controller 下创建控制器类的文件, 如下图所示, HelloWorldController 的构造函数使用了依赖注入,通过将 IHelloMessageService 的实现实例注入到控制器，使控制器能
 够使用 IHelloMessageService 的功能
 
+ControllerBase是ASP.NET Core中的基类，它提供了处理HTTP请求和生成HTTP响应的功能，作为MVC（Model-View-Controller）模式中的一部分，ControllerBase用于定义控制器类
+
 [HttpGet] 是定义了一个HTTP GET方法
 
 [Route("api/hello")] 属性来指定该方法的路由, 当访问该路径时,将执行Hello方法
@@ -132,29 +134,3 @@ There was an error saving the HTTPS developer certificate to the current user pe
 存在并可以执行上述终端代码的操作“dotnet dev-certs https” 启动项目，完成之后查看 对应端口路由地址 是否可以正常显示
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-e468f1d2f42ee68d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
