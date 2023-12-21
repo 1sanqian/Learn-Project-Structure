@@ -5,7 +5,7 @@ Mediator 的主要工作是协调相关对象之间的交互，可以通过注�
 1. 在controller 层，引入mediator, controller层中处理协调和控制对象之间的交互，以下是Post请求的例子
 
 ``` 
-[ApiController]å
+[ApiController]
 [Route("api/people")]
 public class PeopleController : ControllerBase
 {
