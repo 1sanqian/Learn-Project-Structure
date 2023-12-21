@@ -47,13 +47,13 @@ Task<TResponse> SendAsync<TMessage, TResponse>(
 
       CancellationToken cancellationToken = default (CancellationToken))
 
-      where TMessage : ICommand    // TMessage参数类型必须是ICommand或者继承ICommand
+      where TMessage : ICommand    // TMessage参数类型必须是实现ICommand接口的类型
 
-      where TResponse : IResponse;   //TResponse参数类型必须是IResponse或者继承IResponse
+      where TResponse : IResponse;   //TResponse参数类型必须是实现了IResponse类型
 ```
 
-所以 CreatePeopleCommand，UpdatePeopleCommand类型必须是ICommand或者继承ICommand
-CreatePeopleResponse，UpdatePeopleCommand类型必须是IResponse或者继承IResponse
+所以 CreatePeopleCommand，UpdatePeopleCommand参数类型必须是实现ICommand接口的类型
+CreatePeopleResponse，UpdatePeopleResponse类型必须是实现了IResponse类型
 
 ```
 public class CreatePeopleCommand : ICommand
@@ -64,11 +64,6 @@ public class CreatePeopleCommand : ICommand
 public class CreatePeopleResponse: IResponse
 {
     public string Result { get; set; }
-}
-
-public class CreatePeopleResponse<T>: IResponse
-{
-    public T Result { get; set; }
 }
 ```
 
