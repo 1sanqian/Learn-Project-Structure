@@ -40,14 +40,19 @@ public class PeopleController : ControllerBase
  
 ```
 //SendAsync 的方法规范， Post 请求的两个参数类型是ICommand，IResponse，Get请求的两个参数类型是IRequest，IResponse,对应的方法会有时不同
-Task<TResponse> SendAsync<TMessage, TResponse>( 
-      TMessage cmd,  
+
+Task<TResponse> SendAsync<TMessage, TResponse>(
+
+      TMessage cmd,
+
       CancellationToken cancellationToken = default (CancellationToken))
+
       where TMessage : ICommand    // TMessage参数类型必须是ICommand或者继承ICommand
+
       where TResponse : IResponse;   //TResponse参数类型必须是IResponse或者继承IResponse
 ```
 
-所以 CreatePeopleCommand，UpdatePeopleCommand类型必须是ICommand或者继承ICommand，
+所以 CreatePeopleCommand，UpdatePeopleCommand类型必须是ICommand或者继承ICommand
 CreatePeopleResponse，UpdatePeopleCommand类型必须是IResponse或者继承IResponse
 
 ```
@@ -68,6 +73,7 @@ public class CreatePeopleResponse<T>: IResponse
 ```
 
 在controller层引入mediator 后，可以是Handler 帮忙处理Message的
+
 在 对应的 handler 文件中，去调用对应的Service 函数执行功能 同时会返回一个 response 
 
 ```
@@ -87,6 +93,7 @@ public class CreatePeopleCommandHandler : ICommandHandler<CreatePeopleCommand, C
         var @event = await _personService.AddPersonAsync(context.Message, cancellationToken).ConfigureAwait(false);  // service 层函数 AddPersonAsync 可以返回一个IEvent 类型的事件，
        
         await context.PublishAsync(@event, cancellationToken).ConfigureAwait(false);
+
         // 返回的事件若是 IEvent 类型必须使用PublishAsync() 将事件 @event 发布到消息队列中，用于将事件发布到消息中间件（例如消息队列），以便其他订阅者可以接收并处理该事件，即 Event 有它自己的handler 事件去处理
         return new CreatePeopleResponse
         {
@@ -102,25 +109,20 @@ public class CreatePeopleCommandHandler : ICommandHandler<CreatePeopleCommand, C
 public class PersonService : IPersonService
 {
     private readonly IMapper _mapper;
+
     private readonly IPersonDataProvider _personDataProvider;
 
-    public PersonService(
-        IMapper mapper,
-        IPersonDataProvider personDataProvider)
+    public PersonService(IMapper mapper, IPersonDataProvider personDataProvider)
     {
         _mapper = mapper;
         _personDataProvider = personDataProvider;
     }
 
-    public async Task<PeopleCreatedEvent> AddPersonAsync(CreatePeopleCommand command,
-        CancellationToken cancellationToken)
+    public async Task<PeopleCreatedEvent> AddPersonAsync(CreatePeopleCommand command, CancellationToken cancellationToken)
     {
       // 对具体的操作类执行之后做一个逻辑处理，也可以在具体操作类执行之前对数据做预处理
-        var response =
-            await _personDataProvider.CreateAsync(_mapper.Map<Person>(command.Person), cancellationToken)
-                .ConfigureAwait(false) > 0
-                ? "数据写入成功"
-                : "数据写入失败";
+        var response = await _personDataProvider.CreateAsync(_mapper.Map<Person>(command.Person), cancellationToken).ConfigureAwait(false) > 0 ? "数据写入成功" : "数据写入失败";
+
        // 之后操作类成功与否都会返回一个结果给 Event,通过结合上下文知道Event可以有它自己的handler事件去处理，PeopleCreatedEvent 在接收到这个返回值之后，会去执行 对应的handler 类PeopleCreatedEventHandler
         return new PeopleCreatedEvent
         {
@@ -131,11 +133,7 @@ public class PersonService : IPersonService
     public async Task<PeopleUpdatedEvent> UpdatePersonAsync(UpdatePeopleCommand command,
         CancellationToken cancellationToken)
     {
-        var response =
-            await _personDataProvider.UpdatePersonAsync(_mapper.Map<Person>(command.Person), cancellationToken)
-                .ConfigureAwait(false) > 0
-                ? "更改成功"
-                : "更改失败";
+        var response = await _personDataProvider.UpdatePersonAsync(_mapper.Map<Person>(command.Person), cancellationToken).ConfigureAwait(false) > 0 ? "更改成功" : "更改失败";
 
         return new PeopleUpdatedEvent
         {
@@ -161,6 +159,7 @@ public class PersonDataProvider : IPersonDataProvider
     {
        // 创建增加一条数据到数据库中
        await _dbContext.AddAsync(person, cancellationToken).ConfigureAwait(false);
+
        //保存上面的对数据库操作并返回成功与否的数值（数值>0：成功，数值=0 ：成功但无受影响行数，数值<0：失败）
        return await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
     }
@@ -235,11 +234,13 @@ public class Person : IEntity
 public class PractiseForFreyaModule : Module
 {
     private readonly Assembly[] _assemblies;
+
     private readonly IConfiguration _configuration;
     
     public PractiseForFreyaModule(IConfiguration configuration,params Assembly[] assemblies)
     {
         _assemblies = assemblies;
+
         _configuration = configuration;
     }
     
@@ -266,17 +267,18 @@ public class PractiseForFreyaModule : Module
 
     private void RegisterDependency(ContainerBuilder builder)
     {
-        foreach (var type in typeof(IService).Assembly.GetTypes()
-                     .Where(t => typeof(IService).IsAssignableFrom(t) && t.IsClass))
+        foreach (var type in typeof(IService).Assembly.GetTypes().Where(t => typeof(IService).IsAssignableFrom(t) && t.IsClass))
         {
             switch (true)
             {
                 case bool _ when typeof(IScopedService).IsAssignableFrom(type):
                     builder.RegisterType(type).AsImplementedInterfaces().InstancePerLifetimeScope();
                     break;
+
                 case bool _ when typeof(ISingletonService).IsAssignableFrom(type):
                     builder.RegisterType(type).AsImplementedInterfaces().SingleInstance();
                     break;
+
                 default:
                     builder.RegisterType(type).AsImplementedInterfaces();
                     break;
@@ -289,6 +291,7 @@ public class PractiseForFreyaModule : Module
         var mediatorBuilder = new MediatorBuilder();
         
         mediatorBuilder.RegisterHandlers(_assemblies);
+
         mediatorBuilder.ConfigureGlobalReceivePipe(c =>
         {
             c.UseUnitOfWork();
@@ -304,9 +307,7 @@ public class PractiseForFreyaModule : Module
 
     private void RegisterSettings(ContainerBuilder builder)
     {
-        var settingTypes = typeof(PractiseForFreyaModule).Assembly.GetTypes()å
-            .Where(t => t.IsClass && typeof(IConfigurationSetting).IsAssignableFrom(t))
-            .ToArray();
+        var settingTypes = typeof(PractiseForFreyaModule).Assembly.GetTypes().Where(t => t.IsClass && typeof(IConfigurationSetting).IsAssignableFrom(t)).ToArray();
     
         builder.RegisterTypes(settingTypes).AsSelf().SingleInstance();
     }
@@ -318,12 +319,8 @@ public class PractiseForFreyaModule : Module
     
     private void RegisterDbContext(ContainerBuilder builder)
     {
-        builder.RegisterType<PractiseForFreyaDbContext>()
-            .AsSelf()
-            .As<DbContext>()
-            .WithParameter((pi, ctx) => pi.ParameterType == typeof(ConnectionString), 
-                (pi, ctx) => ctx.Resolve<ConnectionString>())
-            .InstancePerLifetimeScope();
+        builder.RegisterType<PractiseForFreyaDbContext>().AsSelf().As<DbContext>().WithParameter((pi, ctx) => pi.ParameterType == typeof(ConnectionString),
+             (pi, ctx) => ctx.Resolve<ConnectionString>()).InstancePerLifetimeScope();
 
         builder.RegisterType<EfRepository>().As<IRepository>().InstancePerLifetimeScope();
     }
@@ -377,10 +374,7 @@ private void RegisterAutoMapper(ContainerBuilder builder)
 public async Task<PeopleCreatedEvent> AddPersonAsync(CreatePeopleCommand command, CancellationToken cancellationToken)
 {
         var response =
-            await _personDataProvider.CreateAsync(_mapper.Map<Person>(command.Person), cancellationToken)
-                .ConfigureAwait(false) > 0
-                ? "数据写入成功"
-                : "数据写入失败";
+            await _personDataProvider.CreateAsync(_mapper.Map<Person>(command.Person), cancellationToken).ConfigureAwait(false) > 0 ? "数据写入成功" : "数据写入失败";
 
         return new PeopleCreatedEvent
         {
@@ -434,8 +428,7 @@ public class CreateOrUpdatePeopleDto
 集合响应对象 CreatePeopleCommand 的属性 Person 将作为一个参数,参与到程序执行中，并将 DTO 组装成一个 Person 的实体类响应对象进，从而进行上下文的操作执行
 
 ```
-public async Task<PeopleCreatedEvent> AddPersonAsync(CreatePeopleCommand command,
-        CancellationToken cancellationToken)
+public async Task<PeopleCreatedEvent> AddPersonAsync(CreatePeopleCommand command, CancellationToken cancellationToken)
 {
     // 将 CreateOrUpdatePeopleDto 类型的command.Person 作为参数传递获取响应
      var response = await _personDataProvider.CreateAsync(_mapper.Map<Person>(command.Person), cancellationToken).ConfigureAwait(false) > 0 ? "数据写入成功" : "数据写入失败";
