@@ -1,4 +1,4 @@
-####  一、mediator 的实现过程
+#  一、mediator 的实现过程
 
 Mediator 的主要工作是协调相关对象之间的交互，可以通过注册了Handler（处理者）和信息Message（消息）之间的绑定，在收到特定信息时就会在它的注册表里找出对应的Handler从而调用。
 
@@ -332,9 +332,91 @@ public class PractiseForFreyaModule : Module
 
 Ps: 如果需要用mediator执行Get方法，则需要将对应的command改为对应的request，要注意，Get在执行完具体的操作类之后，一般不需要返回Event 事件
 
-####  二、DTO
+# 二、AutoMapper
+
+AutoMapper的作用在简化.NET应用程序中的对象映射过程。它提供一种自动化方法将一个对象的属性值复制到另一个对象的对应的属性上，减少手写编写映射代码的工作量
+
+对象映射：AutoMapper使您能够定义对象之间的映射规则，无需手动编写属性赋值代码。根据预定义的规则自动执行属性值的复制，从而实现对象之间的映射，同时实现一个对象的属性值传递给另一个对象。
+
+提高开发效率：通过自动执行对象映射，AutoMapper减少了手动编写大量的赋值代码的工作量，从而提高了开发效率，只需定义一次映射规则，就可重复使用它来执行对象映射，无需每次都手动复制属性。
+
+简化复杂映射：当对象之间的属性名称不一致、类型不匹配或存在嵌套关系时，手动编写映射代码可能变得复杂和繁琐。AutoMapper提供了灵活的配置选项，允许自定义映射规则、类型转换、条件映射等，以满足特定的需求。
+
+支持逆向映射：AutoMapper还支持逆向映射，即从目标对象到源对象的映射。这使得在需要进行双向数据绑定或更新操作时更加方便。
+
+1. 建立映射规则
+
+   将 CreateOrUpdatePeopleDto 映射到 Person 中。
+
+```
+public class PeopleMapping : Profile
+{
+    public PeopleMapping()
+    {
+        CreateMap<CreateOrUpdatePeopleDto, Person>();
+    }
+}
+```
+
+   记得注册一个AutoMapper
+```
+
+private void RegisterAutoMapper(ContainerBuilder builder)
+{
+    builder.RegisterAutoMapper(typeof(PractiseForFreyaModule).Assembly);
+}
+
+```
+
+   
+2. 使用映射器执行映射
+
+   _mapper.Map<Person>(command.Person) 是将一个 CreateOrUpdatePeopleDto 的对象类映射到 Person 实体中，从而实现两个对象的转化，CreateOrUpdatePeopleDto 的属性值将会被映射到 Person的属性值中
+
+```
+public async Task<PeopleCreatedEvent> AddPersonAsync(CreatePeopleCommand command, CancellationToken cancellationToken)
+{
+        var response =
+            await _personDataProvider.CreateAsync(_mapper.Map<Person>(command.Person), cancellationToken)
+                .ConfigureAwait(false) > 0
+                ? "数据写入成功"
+                : "数据写入失败";
+
+        return new PeopleCreatedEvent
+        {
+            Result = response
+        };
+}
+```
+   
+# 三、DTO
 
 如果涉及到不同层或组件之间需要传输数据可以采用DTO的方式继续数据传递，不同的上下文之间传递数据，以便通过减少数据传输和提高性能来优化应用程序，本文涉及到从控制层接受post的请求数据，由服务层接收控制层传递的请求并与数据访问层进行交互，所以采用的DTO 进行数据的高效输出
+
+1. DTO 的主要作用：
+
+数据传输：DTO 用于在不同层之间传输数据。它可以将多个相关属性组合成一个对象，方便在不同层之间传递和使用数据
+
+数据封装：DTO 可以封装从数据库、外部服务或其他数据源检索的数据。它可以将这些数据转换为应用程序层或服务层需要的特定格式，从而提供更高层次的抽象和封装
+
+数据筛选和转换：DTO 允许在不同层之间进行数据筛选和转换。例如，您可以定义不同的 DTO 类型来仅包含特定字段，或者对数据进行格式转换、单位转换等操作，以满足不同层的需求
+
+减少网络传输量：通过使用 DTO，您可以仅传输需要的数据字段，而不是将整个领域对象传输到客户端。这可以降低网络传输的数据量，提高性能和效率
+
+版本控制：DTO 还可以用于处理应用程序的版本控制。当应用程序的数据结构发生变化时，您可以通过更新和调整 DTO 来适应这些变化，而不会对其他层产生影响
+
+2. 使用 DTO 
+
+将 CreateOrUpdatePeopleDto 类 作为 集合响应对象 CreatePeopleCommand 的属性 Person 的类型
+
+```
+public class CreatePeopleCommand : ICommand
+{ 
+    public CreateOrUpdatePeopleDto Person { get; set; }
+}
+```
+
+CreateOrUpdatePeopleDto 可以有它自己的各个属性，如 Id ，FirstName 等等
 
 ```
 public class CreateOrUpdatePeopleDto
@@ -346,5 +428,21 @@ public class CreateOrUpdatePeopleDto
     public string LastName { get; set; }
     
     public DateTimeOffset CreateAt { get; set; }
+}
+```
+
+集合响应对象 CreatePeopleCommand 的属性 Person 将作为一个参数,参与到程序执行中，并将 DTO 组装成一个 Person 的实体类响应对象进，从而进行上下文的操作执行
+
+```
+public async Task<PeopleCreatedEvent> AddPersonAsync(CreatePeopleCommand command,
+        CancellationToken cancellationToken)
+{
+    // 将 CreateOrUpdatePeopleDto 类型的command.Person 作为参数传递获取响应
+     var response = await _personDataProvider.CreateAsync(_mapper.Map<Person>(command.Person), cancellationToken).ConfigureAwait(false) > 0 ? "数据写入成功" : "数据写入失败";
+
+        return new PeopleCreatedEvent
+        {
+            Result = response
+        };
 }
 ```
