@@ -378,6 +378,10 @@ public async Task<PeopleCreatedEvent> AddPersonAsync(CreatePeopleCommand command
         };
 }
 ```
+
+在执行AutoMapper之前，记得引入包文件
+
+![image.png](https://upload-images.jianshu.io/upload_images/29476859-db62cc4dda377e40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
    
 # 三、DTO
 
