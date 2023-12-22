@@ -13,8 +13,11 @@ mediator: controller 层不需要再引入不同的类以达成目标，只需�
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-88ef632eb839c772.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 Mediator：抽象中介者角色，定义一个接口，用于其它Colleague进行通信
+
 Colleague：同事接口，与其它同事通信时依靠Mediator进行通信
+
 ConcreteMediator：具体中介者，了解并维护各个Colleague，协调它们的通信行为
+
 ConcreteColleague: 具体同事类，继承自同事类Colleague并实现自己的消息处理逻辑
 
 + mediator的基本工作流
@@ -25,9 +28,9 @@ ConcreteColleague: 具体同事类，继承自同事类Colleague并实现自己�
 
 一个event 可以发送处理多个command
 
-event 可以发送一个command ,这个command 可以指定给 event 的上一级handler，构成环形结构
+event 可以自己的EventHanlder ,这个EventHanlder 也可以指向给 event 的上一级handler，构成环形结构
 
-![image.png](https://upload-images.jianshu.io/upload_images/29476859-ee4b44a5d865ced2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![image.png](https://upload-images.jianshu.io/upload_images/29476859-06ad3f2c6aafa530.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 1. 优点
 + 简化了对象之间的交互，由原先同事之间直接的多对多关系变为同事之间借用中介者的这种间接的多对多的关系
@@ -46,9 +49,13 @@ event 可以发送一个command ,这个command 可以指定给 event 的上一�
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-dd6ff787ce60020d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 global: 全局接收管道,每当消息在到达下一个管道和处理程序之前发送、发布或请求时，都会触发此管道
+
 command: 命令接收管道，主要是在消息到达命令处理程序之前和之后触发
+
 event: 事件接收管道，主要是在消息到达事件处理程序之后和之前触发
+
 requerst: 请求接收管道，主要是在请求处理程序之后和之前触发
+
 publish: 发布管道,当在处理程序中发布时，将触发此管道IEvent，此管道仅用于IEvent且通常用作传出拦截器
 
 .net有它自己的管道，mediator的管道是在.net管道的里面，而上述管道是在mediator管道里面的。
