@@ -1,4 +1,5 @@
 # 一、Handler
+
 Handler 是消息控制机制，主要用于线程间的通信，Handler的通信方案就是共享，Handler 可以从子线程向主线程发送消息，也可以从主线程往子线程发送消息，子线程、Handler、主线程构成了一个消费者-生产者模式
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-3672dea7fd1514c6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -38,27 +39,38 @@ Handler初始化： 在主线程中创建Looper、MessageQueue、Handler，创�
 
 子线程发送消息：子线程中通过Handler向消息队列MessageQueue中发送消息。
 
-消息循环Looper 循环取出MessageQueue中的Message消息。Looper 将循环取出的消息分发给Handler中的handleMessage()方法。
+消息循环Looper：循环取出MessageQueue中的Message消息。Looper 将循环取出的消息分发给Handler中的handleMessage()方法。
 
-接收处理消息：    在handleMessage(Message msg)方法中处理消息。
+接收处理消息：在handleMessage(Message msg)方法中处理消息。
 
 4. Looper的作用
 
 创建Looper对象
+
 创建MessageQueue对象
+
 让Looper对象持有当前线程
+
 Looper相关方法：
+
 Looper.prepare()———为当前线程创建一个Looper；
+
 Looper.loop() ——— 开启消息循环；
+
 Looper.prepareMainLooper() ——— 为主线程创建Looper时使用，在ActivityThread有用到。
+
 Looper.getMainLooper() ——— 通过该方法可以获取主线程的Looper。
+
 Looper.quit() ——— 退出Looper循环。
+
 Looper.quitSafely() ——— 自己创建的Looper，在不使用的时候，需要退出。
 
 5. Thread、Handler、Looper的对应关系
 
 一个Thread线程只能绑定到一个Looper循环器上，但可以有多个Handler实例处理者。
+
 一个Looper循环器可以绑定多个Handler实例。比如主线程的main()方法中创建了Looper和Handler对象，但是我们开发过程中仍然可以创建其他Handler对象。
+
 一个Handler对象处理者，只能绑定到一个Looper循环器中。
 
 ps :本文部分知识点来自网上，原文链接：https://blog.csdn.net/m0_49508485/article/details/127998204
