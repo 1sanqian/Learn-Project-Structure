@@ -53,6 +53,7 @@ Task<TResponse> SendAsync<TMessage, TResponse>(
 ```
 
 所以 CreatePeopleCommand，UpdatePeopleCommand参数类型必须是实现ICommand接口的类型
+
 CreatePeopleResponse，UpdatePeopleResponse类型必须是实现了IResponse类型
 
 ```
