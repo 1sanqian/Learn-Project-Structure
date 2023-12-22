@@ -30,7 +30,7 @@ ConcreteColleague: 具体同事类，继承自同事类Colleague并实现自己�
 
 event 可以自己的EventHanlder ,这个EventHanlder 也可以指向给 event 的上一级handler，构成环形结构
 
-![image.png](https://upload-images.jianshu.io/upload_images/29476859-06ad3f2c6aafa530.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![image.png](https://upload-images.jianshu.io/upload_images/29476859-6b596cd053ab463c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 1. 优点
 + 简化了对象之间的交互，由原先同事之间直接的多对多关系变为同事之间借用中介者的这种间接的多对多的关系
