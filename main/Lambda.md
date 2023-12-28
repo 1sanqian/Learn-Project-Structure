@@ -79,6 +79,37 @@ Func<int, string, bool> isTooLong = (int x, string s) => s.Length > x;
 
 ```
 Func<int, int, int> constant = (_, _) => 42;
+
+
+// 弃元是一个占位符变量，用来指定 Lambda 表达式中 未使用的输入参数，在使用 lambda 表达式时，弃元的参数一般是被忽视不使用的，以下是弃元的例子
+var (_, _, _, pop1, _, pop2) = QueryCityDataForYears("New York City", 1960, 2010);
+
+//表达式 "{pop2 - pop1:N0}" 是一个格式化字符串，用于在数学或统计上表示 "pop2" 减去 "pop1" 的差值，并将结果格式化为带有千位分隔符的整数
+Console.WriteLine($"Population change, 1960 to 2010: {pop2 - pop1:N0}");   // ":N0" 是一个格式化选项，指示将结果格式化为带有千位分隔符的整数，即每三位数字用逗号隔开。
+
+static (string, double, int, int, int, int) QueryCityDataForYears(string name, int year1, int year2)
+{
+    int population1 = 0, population2 = 0;
+    double area = 0;
+
+    if (name == "New York City")
+    {
+        area = 468.48;
+        if (year1 == 1960)
+        {
+            population1 = 7781984;
+        }
+        if (year2 == 2010)
+        {
+            population2 = 8175133;
+        }
+        return (name, area, year1, population1, year2, population2);
+    }
+
+    return ("", 0, 0, 0, 0, 0);
+}
+// The example displays the following output:
+// Population change, 1960 to 2010: 393,149
 ```
 
 使用 lambda 表达式[提供事件处理程序](https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-guide/events/how-to-subscribe-to-and-unsubscribe-from-events)时，lambda 弃元参数可能很有用
