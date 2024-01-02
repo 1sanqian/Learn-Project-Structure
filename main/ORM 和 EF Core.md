@@ -557,6 +557,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 ps： 实体键： https://learn.microsoft.com/en-us/ef/core/modeling/keys?tabs=data-annotations
+
 ps:  默认值和生成值： https://learn.microsoft.com/en-us/ef/core/modeling/generated-properties?tabs=data-annotations
 
 ### 模型
@@ -746,7 +747,6 @@ public class ApplicationDbContext : DbContext
 ```
 
 ps： DbContext 配置和初始化： https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/
-
 
 #### 创建模型
 
@@ -989,6 +989,7 @@ using (var context = new BloggingContext())
 ```
 
 ps: 查询数据的追踪与不追踪：https://learn.microsoft.com/en-us/ef/core/querying/tracking
+
 ps: 查询数据：https://learn.microsoft.com/en-us/ef/core/querying/
 
 ### 保存数据 
@@ -1162,4 +1163,5 @@ context.SaveChanges();
 ```
 
 ps：级联删除： https://learn.microsoft.com/en-us/ef/core/saving/cascade-delete
+
 ps: 保存数据：https://learn.microsoft.com/en-us/ef/core/saving/
