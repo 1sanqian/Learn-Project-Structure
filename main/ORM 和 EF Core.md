@@ -47,7 +47,7 @@ Entity Framework Core（EF Core）是一个对象关系映射（ORM）框架，�
 #### 举例
 ##### 1. 定义实体类
 
-创建表示数据库表的实体类。每个实体类通常代表数据库中的一张表，类中的属性对应表中的列。
+创建表示数据库表的实体类。每个实体类通常代表数据库中的一张表，类中的属性对应表中的列
 
 ```
 // 实体类：Blog
@@ -72,7 +72,7 @@ public class Post
 
 ##### 2. 创建数据库上下文类
 
-派生自 DbContext 的类，它表示应用程序和数据库之间的会话。在这个类中，你可以定义实体集合（DbSet<>）以及配置数据库连接等信息。
+派生自 DbContext 的类，它表示应用程序和数据库之间的会话。在这个类中，你可以定义实体集合（DbSet<>）以及配置数据库连接等信息
 
 ```
 // 数据库上下文类：BloggingContext
@@ -91,7 +91,7 @@ public class BloggingContext : DbContext
 
 ##### 3. 配置实体之间的关系和映射
 
-使用 Fluent API 或者数据注解（Data Annotations）来配置实体之间的关系，以及属性与数据库列之间的映射关系。这些配置用于定义数据库的结构。
+使用 Fluent API 或者数据注解（Data Annotations）来配置实体之间的关系，以及属性与数据库列之间的映射关系。这些配置用于定义数据库的结构
 
 ```
 public class BloggingContext : DbContext
@@ -117,7 +117,7 @@ public class BloggingContext : DbContext
 
 ##### 4. 进行数据库操作(执行 SQL 查询)
 
-在应用程序中，通过数据库上下文类访问和操作实体集合。可以使用 LINQ 查询语言进行数据检索、插入、更新和删除操作等。
+在应用程序中，通过数据库上下文类访问和操作实体集合。可以使用 LINQ 查询语言进行数据检索、插入、更新和删除操作等
 
 ```
 // 在应用程序中使用数据库上下文进行数据库操作
@@ -156,7 +156,6 @@ EF Core 的迁移系统允许你基于模型更改来更新数据库架构。通
 ```
 dotnet ef migrations add InitialCreate
 dotnet ef database update
-
 ```
 
 ## EF Core 的相关知识点
@@ -350,12 +349,16 @@ internal class MyContext : DbContext
     }
 }
 ```
+
+ps： 实体类型： https://learn.microsoft.com/en-us/ef/core/modeling/entity-types?tabs=data-annotations
+
 #### 实体属性
 
 模型中的每个实体类型都有一组属性，EF Core 将从数据库中读取和写入这些属性。如果您使用的是关系数据库，实体属性将映射到表列
 
 ##### 包含和排除的属性
 
+```
 public class Blog
 {
   // 正常包含
@@ -366,6 +369,7 @@ public class Blog
     [NotMapped]
     public DateTime LoadedFromDatabase { get; set; }
 }
+```
 
 #####  常见属性
 
@@ -426,13 +430,15 @@ modelBuilder.Entity<Customer>().Property(c => c.Name)
     .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 ```
 
-#### 实体按键
+ps: 实体属性： https://learn.microsoft.com/en-us/ef/core/modeling/entity-properties?tabs=data-annotations%2Cwithout-nrt
+
+#### 实体键
 
 键充当每个实体实例的唯一标识符。EF 中的大多数实体都有一个键，这映射到关系数据库中主键的概念
 
 ##### 配置主键
 
-Id按照约定，名为或 的属性<type name>Id将被配置为实体的主键
+Id按照约定，名为或 的属性`<type name>Id`将被配置为实体的主键
 
 ```
 internal class Car
@@ -468,7 +474,7 @@ internal class Car
 
 ##### 主键名称
 
-按照惯例，在关系数据库上，主键是使用名称创建的PK_<type name>。您可以配置主键约束的名称，如下所示：
+按照惯例，在关系数据库上，主键是使用名称创建的`PK_<type name>`。您可以配置主键约束的名称，如下所示：
 
 ```
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -538,7 +544,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-按照惯例，将为备用键引入的索引和约束将被命名AK_<type name>_<property name>（对于复合备用键，<property name>将成为下划线分隔的属性名称列表）
+按照惯例，将为备用键引入的索引和约束将被命名`AK_<type name>_<property name>`(对于复合备用键，`<property name>`将成为下划线分隔的属性名称列表）
 
 可以配置备用键的索引名称和唯一约束
 
@@ -550,6 +556,8 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         .HasName("AlternateKey_LicensePlate");
 }
 ```
+ps： 实体键： https://learn.microsoft.com/en-us/ef/core/modeling/keys?tabs=data-annotations
+ps:  默认值和生成值： https://learn.microsoft.com/en-us/ef/core/modeling/generated-properties?tabs=data-annotations
 
 ### 模型
 
@@ -981,6 +989,7 @@ using (var context = new BloggingContext())
 ```
 
 ps: 查询数据的追踪与不追踪：https://learn.microsoft.com/en-us/ef/core/querying/tracking
+ps: 查询数据：https://learn.microsoft.com/en-us/ef/core/querying/
 
 ### 保存数据 
 
@@ -1152,4 +1161,5 @@ blog.Posts.Clear();
 context.SaveChanges();
 ```
 
-ps： 级联删除： https://learn.microsoft.com/en-us/ef/core/saving/cascade-delete
+ps：级联删除： https://learn.microsoft.com/en-us/ef/core/saving/cascade-delete
+ps: 保存数据：https://learn.microsoft.com/en-us/ef/core/saving/
