@@ -46,7 +46,7 @@ Console.WriteLine(factorsofFourList[2]);
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-6d70c056d77f6a5c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 方法
+### 方法（OfType、Where）
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-01fd61cb6f9ce900.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -59,7 +59,7 @@ Console.WriteLine(factorsofFourList[2]);
 + 可以投影属性，并对该属性执行数学函数
 + 还可以在不更改原始对象的情况下投影该对象
 
-### 方法
+### 方法(Select、SelectMany、Zip)
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-6e8c3de6b8e6d3d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -247,7 +247,7 @@ ps：投影运算：https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-
 
 LINQ 中的集运算是指根据相同或不同集合（或集）中是否存在等效元素来生成结果集的查询运算
 
-### 方法
+### 方法(Distinct、Except、Intersect、Union)
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-3411adcab6410518.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
@@ -510,7 +510,7 @@ ps：集运算：https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-gui
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-193efde0e5bb59aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 方法
+### 方法(OrderBy、OrderByDescending、ThenBy、ThenByDescending、Reverse)
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-70879289ce77871e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -617,7 +617,7 @@ ps: 排序： https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-guide/
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-b8a5ae6668c1b163.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
-### 方法
+### 方法(All、Any、Contains)
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-e9ed5d18beda0fa7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -735,7 +735,7 @@ LINQ 中的分区是指将输入序列划分为两个部分的操作，无需重
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-092f3233265da150.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 方法
+### 方法(Skip、SkipWhile、Take、TakeWhile、Chunk)
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-7c43b89e18458ec7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -799,7 +799,7 @@ ps: 数据分区运算：https://learn.microsoft.com/zh-cn/dotnet/api/system.lin
 
 生成是指创建新的值序列
 
-### 方法
+### 方法(DefaultlfEmpty、Empty、Range、Repeat)
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-91b42b25fe688c21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -831,7 +831,7 @@ ps: 生成运算：https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-g
 
 两个序列，其相应元素相等且具有被视为相等的相同数量的元素
 
-### 方法
+### 方法(SequenceEqual)
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-23cc3cc29c8d1a74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -869,7 +869,7 @@ ps: 相等运算：https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-g
 
 元素运算从序列中返回唯一、特定的元素
 
-### 方法
+### 方法(ElementAt、ElementAtOrDefault、First、FirstOrDefault、Last、LastOrDefault、Single、SingleOrDefault)
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-c9896e2f7255002b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -908,7 +908,7 @@ LINQ 查询中的转换运算可用于各种应用程序。 以下是一些示�
 + [Enumerable.OfType](https://learn.microsoft.com/zh-cn/dotnet/api/system.linq.enumerable.oftype) 方法可用于为 LINQ 查询启用非参数化集合
 + [Enumerable.ToArray](https://learn.microsoft.com/zh-cn/dotnet/api/system.linq.enumerable.toarray)、[Enumerable.ToDictionary](https://learn.microsoft.com/zh-cn/dotnet/api/system.linq.enumerable.todictionary)、[Enumerable.ToList](https://learn.microsoft.com/zh-cn/dotnet/api/system.linq.enumerable.tolist) 和 [Enumerable.ToLookup](https://learn.microsoft.com/zh-cn/dotnet/api/system.linq.enumerable.tolookup) 方法可用于强制执行即时的查询，而不是将其推迟到枚举该查询时
 
-### 方法
+### 方法(AsEnumerable、AsQueryable、Cast、OfType、ToArray、ToDictionary、ToList、ToLookup)
 
 下表列出了执行数据类型转换的标准查询运算符方法
 
@@ -962,7 +962,7 @@ ps: 转换数据类型：https://learn.microsoft.com/zh-cn/dotnet/csharp/program
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-a38dc6f5528d8284.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 方法
+### 方法(Concat)
  
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-b7868b7bd66109cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -1021,13 +1021,13 @@ ps: 串联运算：https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-g
 
 ![](https://upload-images.jianshu.io/upload_images/29476859-bd8fde2d8c625955.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 方法
+### 方法(Aggregate、Average、Count、LongCount、Max/MaxBy、Sum)
  
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-c02f112b563fc3d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ps:  聚合运算：https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-guide/concepts/linq/aggregation-operations
 
-## 联接运算（Join）
+## 联接运算
 
 联接两个数据源就是将一个数据源中的对象与另一个数据源中具有相同公共属性的对象相关联
 
@@ -1038,7 +1038,7 @@ INQ 框架中提供的 join 方法包括 [Join](https://learn.microsoft.com/zh-
 +  [GroupJoin](https://learn.microsoft.com/zh-cn/dotnet/api/system.linq.enumerable.groupjoin) 方法在关系数据库术语中没有直接等效项，但实现了内部联接和左外部联接的超集
 + 左外部联接是指返回第一个（左侧）数据源的每个元素的联接，即使其他数据源中没有关联元素
 
-### 方法
+### 方法(Join、GroupJoin)
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-f907224cd04ec60f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -1396,7 +1396,7 @@ ps: 自定义联接： https://learn.microsoft.com/zh-cn/dotnet/csharp/linq/perf
 
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-9746a8a95d334e99.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-### 方法
+### 方法(GroupBy、ToLookup)
 
 ![pps](https://upload-images.jianshu.io/upload_images/29476859-5733bc80f5382f2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
