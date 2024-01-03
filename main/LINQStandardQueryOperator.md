@@ -1530,3 +1530,7 @@ var queryGroupMax =
 ```
 
 ps： 对分组操作执行子查询： https://learn.microsoft.com/zh-cn/dotnet/csharp/linq/perform-a-subquery-on-a-grouping-operation
+
+## 备注
+
+本文所有方法都可以通过对应模块链接跳转到具体详情页，请留意查看
