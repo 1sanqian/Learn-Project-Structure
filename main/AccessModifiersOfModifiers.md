@@ -421,3 +421,264 @@ public class HiddenWidget
 ```
 
 *file： https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/file*
+
+## 参数修饰符
+
++ 参数修饰符 主要用于改变方法参数行为或传递方式的 关键字
++ 可以用于方法的参数列表中
++ 提供了不同的传递方式或指定了参数的特殊行为
++ 常见的参数修饰符有：
+    + in 修饰符
+    + out 修饰符
+    + ref 修饰符
+    + params 修饰符
+
+
+### 1. in
+
+#### in 作为修饰符
+
++ in 修饰符用于指定参数是只读的(C# 7.2 引入的一个特性)
++ 使用 in 修饰符来传递参数时，表示参数在方法内是只读的，方法内部不能修改该参数的值
++ 当传递大型结构体或类对象时，使用 in 修饰符可以避免不必要的拷贝操作，提高性能
+
+```
+void MyMethod(in int x)
+{
+    // 在这里不能修改 x 的值
+}
+
+int value = 42;
+MyMethod(in value);
+```
+#### in 作为 泛型参数类型
+
++ in 作为泛型参数类型的一部分通常用于接口和委托，可指定类型参数是逆变的
++ 在泛型接口和委托中使用 in 关键字,使用更泛化的类型替代更具体的类型
++ 具有 逆变类型参数 的接口 使其 方法接受的参数的类型 可以比 接口类型参数 指定的类型 派生程度 更小
+
+```
+// 1. 逆变泛型接口
+// 逆变 接口 
+interface IContravariant<in A> { }
+
+// 扩展 逆变 接口 
+interface IExtContravariant<in A> : IContravariant<A> { }
+
+// 实现 逆变 接口
+class Sample<A> : IContravariant<A> { }
+
+class Program
+{
+    static void Test()
+    {
+        IContravariant<Object> iobj = new Sample<Object>();
+        IContravariant<String> istr = new Sample<String>();
+
+        // 可以把 iobj 赋值 给 istr
+        // 因为 IContravariant 是逆变接口，类型可以逆变
+        istr = iobj;
+    }
+}
+
+// 2. 逆变泛型委托
+// 逆变 委托
+public delegate void DContravariant<in A>(A argument);
+
+//  匹配 委托签名 的方法
+public static void SampleControl(Control control){ }
+public static void SampleButton(Button button){ }
+
+public void Test()
+{
+
+    // 使用方法实例化委托
+    DContravariant<Control> dControl = SampleControl;
+    DContravariant<Button> dButton = SampleButton;
+
+    // 可以把 dControl 赋值 给 dButton
+    // 因为 DContravariant 是逆变委托，类型可以逆变
+    dButton = dControl;
+
+    // 调用委托
+    dButton(new Button());
+}
+```
+
+**两种用法之间的关键区别在于上下文：一个是方法参数的上下文，一个是泛型接口或委托的上下文**
+
+in: https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/in-generic-modifier
+
+###  2. out
+
+#### out 作为修饰符
+
++ out 修饰符 用于指示参数是一个输出参数，允许方法修改参数的值并将其传递回调用方
++ 调用方在调用方法之前不需要为 out 参数分配值
++ 方法内部必须在退出之前为 out 参数分配一个值
+
+```
+void MyMethod(out int result)
+{
+    // 在这里必须为 result 分配一个值
+    result = 42;
+}
+
+// 调用 MyMethod 时，不需要初始化 result，因为它是 out 参数
+int outputValue;
+MyMethod(out outputValue);
+// 此时 outputValue 的值为 42
+```
+
+#### out  作为 泛型参数类型
+
++ out 作为泛型参数类型的一部分通常用于接口和委托，可指定类型参数是协变的
++ 在泛型接口和委托中使用 out 关键字,可以  使得泛型参数类型可以被替代为其派生类型
++ 具有协变类型参数的接口使其方法返回的类型可以比类型参数指定的类型派生程度更大
+
+```
+// 1. 协变泛型接口
+// 协变 接口
+interface ICovariant<out R> { }
+
+// 扩展 协变 接口
+interface IExtCovariant<out R> : ICovariant<R> { }
+
+// 实现 协变 接口
+class Sample<R> : ICovariant<R> { }
+
+class Program
+{
+    static void Test()
+    {
+        ICovariant<Object> iobj = new Sample<Object>();
+        ICovariant<String> istr = new Sample<String>();
+
+        // 可以将 istr  赋值给 iobj
+        // Covariant 接口是 协变
+        iobj = istr;
+    }
+}
+
+// 2. 协变泛型 委托
+// 协变 委托
+public delegate R DCovariant<out R>();
+
+// 匹配 委托签名 的方法
+public static Control SampleControl()
+{ 
+    return new Control(); 
+}
+
+public static Button SampleButton()
+{
+     return new Button(); 
+}
+
+public void Test()
+{
+    // 使用方法 实例化 委托
+    DCovariant<Control> dControl = SampleControl;
+    DCovariant<Button> dButton = SampleButton;
+
+    // 把 dButton 赋值给  dControl
+    // DCovariant委托是协变的
+    dControl = dButton;
+
+    // 调用委托
+    dControl();
+}
+```
+
+**两种用法之间的关键区别在于上下文：一个是方法参数的上下文，一个是泛型接口或委托的上下文**
+
+out : https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/out-generic-modifier
+
+#### 逆变和协变
+
+协变（Covariance）和逆变（Contravariance）是泛型类型参数在继承关系中的两个重要概念，它们指定了在派生类型和基类型之间如何处理泛型类型参数
++ 协变允许泛型类型参数在派生类型中使用更为具体的类型
++ 逆变允许泛型类型参数在派生类型中使用更为抽象的类型
++ 协变使用 out 关键字，逆变使用 in 关键字
+
+
+##### 1. 逆变（Contravariance）
+
++ 表示泛型类型参数能够在派生类型中使用更为抽象的类型（基类型）
++ 在 C# 中，逆变使用 in 关键字来标记泛型参数，同样通常出现在接口和委托中
++ 逆变允许将一个泛型类型参数更为抽象的类型传递给一个期望派生类型的情况
+
+```
+// 示例中，T 是逆变的
+delegate void MyDelegate<in T>(T item);
+
+// 可以将 Action<Base> 赋值给 MyDelegate<Derived>
+MyDelegate<Derived> myAction = new Action<Base>(someBase => { /* 实现 */ });
+```
+
+##### 2. 协变（Covariance）
++ 协变表示泛型类型参数能够在派生类型中使用更为具体的类型（派生类型）
++ 在 C# 中，协变使用 out 关键字来标记泛型参数，通常出现在接口和委托中
++ 协变允许将一个泛型类型参数更为具体的类型传递给一个期望基类型的情况
+
+```
+// 示例中，T 是协变的
+interface IMyInterface<out T>
+{
+    T GetItem();
+}
+
+// 可以将 MyImplementation<Derived> 赋值给 IMyInterface<Base>
+IMyInterface<Base> myObj = new MyImplementation<Derived>();
+```
+
+逆变和协变：https://learn.microsoft.com/zh-cn/dotnet/csharp/programming-guide/concepts/covariance-contravariance/
+
+###  3. ref
+
++ ref 关键字用于将参数传递作为引用
++ 通过 ref，方法可以修改调用方提供的变量的值
++ 调用方必须初始化变量，且在调用方法时，参数需要使用 ref 关键字
+
+```
+void ModifyValue(ref int x)
+{
+    x = x * 2;
+}
+
+int value = 5;
+ModifyValue(ref value);
+// 此时 value 的值为 10
+```
+
+ref: https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/ref
+
+###  4. params
+
++ params 关键字用于表示一个可变数量的参数
++ 该参数必须是数组类型，而调用方可以提供不同数量的参数
++ 在方法声明中的 params 关键字之后不允许有任何其他参数，并且在方法声明中只允许有一个 params 关键字
++ 使用 params 参数调用方法时，可以传入：
+  + 数组元素类型的参数的逗号分隔列表
+  + 指定类型的参数的数组
+  + 无参数。 如果未发送任何参数，则 params 列表的长度为零
+
+```
+int Sum(params int[] numbers)
+{
+    int sum = 0;
+    foreach (int num in numbers)
+    {
+        sum += num;
+    }
+    return sum;
+}
+
+int total = Sum(1, 2, 3, 4, 5);
+// 此时 total 的值为 15
+```
+
+ps
+关于参数修饰符具体可参考： https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/method-parameters#params-modifier
+
+备注： 关于其他修饰符如 `abstract`、`const`、`event`、`extern`、`override`、`sealed`、`static`、`virtual`、`volatile`、`unsafe`等修饰符将放在第二篇
