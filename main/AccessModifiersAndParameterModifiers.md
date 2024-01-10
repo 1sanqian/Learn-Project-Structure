@@ -651,6 +651,106 @@ ModifyValue(ref value);
 // 此时 value 的值为 10
 ```
 
+#### 题外话——装箱拆箱
+
+##### 装箱
+
+装箱是值类型到 object 类型或到此值类型所实现的任何接口类型的隐式转换
++ 在装箱过程中，将值类型的数据包装在一个对象中
++ 当值类型的实例 需要 存储 在 引用类型的变量 中，或者 传递 给 期望引用类型的参数 时，就会发生装箱
++ 对值类型装箱会在堆中分配一个对象实例，并将该值复制到新的对象中
++ 装箱用于在垃圾回收堆中存储值类型
+
+![image](https://github.com/1sanqian/Learn-Project-Structure/assets/82638546/eb3d324d-62cf-4764-a8f2-5a2491a97de2)
+
+```
+// 使用装箱将整型变量 i 转换为对象 o。存储在变量 i 中的值就从 123 更改为 456。表明原始值类型和装箱的对象使用不同的内存位置，因此能够存储不同的值
+class TestBoxing
+{
+    static void Main()
+    {
+        int i = 123;
+
+        // Boxing copies the value of i into object o.
+        object o = i;
+
+        // Change the value of i.
+        i = 456;
+
+        // The change in i doesn't affect the value stored in o.
+        System.Console.WriteLine("The value-type value = {0}", i);
+        System.Console.WriteLine("The object-type value = {0}", o);
+    }
+}
+/* Output:
+    The value-type value = 456
+    The object-type value = 123
+*/
+```
+
+##### 拆箱
+
+拆箱是从 object 类型到值类型或从接口类型到实现该接口的值类型的显式转换
++ 在拆箱过程中，从包含值类型数据的对象中提取原始值类型的数据
++ 当需要将引用类型中的值转换回值类型时，就会发生拆箱
++ 拆箱操作涉及从堆上的对象中提取数据，并将其复制到值类型变量中
++ 要在运行时成功取消装箱值类型，被取消装箱的项必须是对一个对象的引用，该对象是先前通过装箱该值类型的实例创建的
++ 尝试取消装箱 null 会导致 NullReferenceException
++ 尝试取消装箱对不兼容值类型的引用会导致 InvalidCastException
+
+![image](https://github.com/1sanqian/Learn-Project-Structure/assets/82638546/f2e36572-7c17-4842-a510-f10a98974434)
+
+```
+// 无效的取消装箱及引发的 InvalidCastException。 使用 try 和 catch，在发生错误时显示错误信息
+class TestUnboxing
+{
+    static void Main()
+    {
+        int i = 123;
+        object o = i;  // implicit boxing
+
+        try
+        {
+            int j = (short)o;  // attempt to unbox
+
+            System.Console.WriteLine("Unboxing OK.");
+        }
+        catch (System.InvalidCastException e)
+        {
+            System.Console.WriteLine("{0} Error: Incorrect unboxing.", e.Message);
+        }
+    }
+}
+```
+
+##### ref 与 拆箱装箱
+
+装箱和拆箱主要涉及值类型和引用类型之间的转换，而使用 ref 关键字时，传递的是原始变量的引用，而不是其值。没有涉及到值类型到引用类型的转换，故不会引发装箱拆箱
+
+```
+// 在使用 ref 关键字时不会发生装箱和拆箱的情况
+class Program
+{
+    static void ModifyValue(ref int value)
+    {
+        // 修改原始变量的值，而不涉及装箱和拆箱
+        value += 10;
+    }
+
+    static void Main()
+    {
+        int originalValue = 5;
+
+        Console.WriteLine($"Original value: {originalValue}");
+
+        // 使用 ref 关键字传递原始变量的引用
+        ModifyValue(ref originalValue);
+
+        Console.WriteLine($"Modified value: {originalValue}");
+    }
+}
+```
+
 ref: https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/ref
 
 ###  4. params
@@ -678,7 +778,6 @@ int total = Sum(1, 2, 3, 4, 5);
 // 此时 total 的值为 15
 ```
 
-ps
-关于参数修饰符具体可参考： https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/method-parameters#params-modifier
+ps：关于参数修饰符具体可参考： https://learn.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/method-parameters#params-modifier
 
 备注： 关于其他修饰符如 `abstract`、`const`、`event`、`extern`、`override`、`sealed`、`static`、`virtual`、`volatile`、`unsafe`等修饰符将放在第二篇
