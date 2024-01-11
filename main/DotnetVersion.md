@@ -55,9 +55,9 @@
 
 CLR 从一开始就被设计为一个跨平台运行时。 它已被移植到多个操作系统和体系结构。 通常，跨平台 .NET 代码不需要经过重新编译就能在新环境中运行。 相反，你只需安装一个不同的运行时即可运行应用
 
-运行时为调试器、[转储](https://learn.microsoft.com/zh-cn/dotnet/core/diagnostics/dumps)和[跟踪](https://learn.microsoft.com/zh-cn/dotnet/core/diagnostics/logging-tracing)工具以及[可观测性](https://learn.microsoft.com/zh-cn/dotnet/core/diagnostics/#instrumentation-for-observability)公开各种[诊断](https://learn.microsoft.com/zh-cn/dotnet/core/diagnostics/)服务和 API。 可观测性实现主要是[围绕 OpenTelemetry 构建](https://devblogs.microsoft.com/dotnet/opentelemetry-net-reaches-v1-0/)的，可实现[灵活的应用程序监视](https://devblogs.microsoft.com/dotnet/announcing-dotnet-monitor-in-net-6/)和站点可靠性工程 (SRE)。
+运行时为调试器、[转储](https://learn.microsoft.com/zh-cn/dotnet/core/diagnostics/dumps)和[跟踪](https://learn.microsoft.com/zh-cn/dotnet/core/diagnostics/logging-tracing)工具以及[可观测性](https://learn.microsoft.com/zh-cn/dotnet/core/diagnostics/#instrumentation-for-observability)公开各种[诊断](https://learn.microsoft.com/zh-cn/dotnet/core/diagnostics/)服务和 API。 可观测性实现主要是[围绕 OpenTelemetry 构建](https://devblogs.microsoft.com/dotnet/opentelemetry-net-reaches-v1-0/)的，可实现[灵活的应用程序监视](https://devblogs.microsoft.com/dotnet/announcing-dotnet-monitor-in-net-6/)和站点可靠性工程 (SRE)
 
-运行时通过结合使用 [P/Invoke](https://learn.microsoft.com/zh-cn/dotnet/standard/native-interop/)、值类型以及跨本机/托管代码边界对值进行 [blit](https://learn.microsoft.com/zh-cn/dotnet/framework/interop/blittable-and-non-blittable-types) 的功能，提供低级别的 C 样式互操作功能。
+运行时通过结合使用 [P/Invoke](https://learn.microsoft.com/zh-cn/dotnet/standard/native-interop/)、值类型以及跨本机/托管代码边界对值进行 [blit](https://learn.microsoft.com/zh-cn/dotnet/framework/interop/blittable-and-non-blittable-types) 的功能，提供低级别的 C 样式互操作功能
 
 ## 运行时库
 
