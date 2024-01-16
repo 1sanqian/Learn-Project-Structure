@@ -93,10 +93,12 @@ protected void Run<T>(Action<T> action, Action<ContainerBuilder> extraRegistrati
             : _scope.BeginLifetimeScope();
 
         var dependency = scope.Resolve<T>();
+
         // 通过生命周期范围解析了类型为 T 的依赖项和类型为 IUnitOfWork 的工作单元
         var unitOfWork = scope.Resolve<IUnitOfWork>();
         
         await action(dependency);
+
         // 在异步操作完成后，调用工作单元的 SaveChangesAsync 方法，以确保对工作单元的任何更改都得以提交
         await unitOfWork.SaveChangesAsync();
     }
@@ -236,8 +238,10 @@ containerBuilder.RegisterInstance(Substitute.For<IMemoryCache>()).AsImplementedI
         if (root == null)
         {
             var containerBuilder = new ContainerBuilder();
+
             // 配置文件
             var configuration = RegisterConfiguration(containerBuilder);
+
             // 注册基础模块
             RegisterBaseContainer(containerBuilder,configuration);
             root = containerBuilder.Build();
@@ -245,8 +249,10 @@ containerBuilder.RegisterInstance(Substitute.For<IMemoryCache>()).AsImplementedI
         }
 
         CurrentScope = root.BeginLifetimeScope();
+
         // 是否使用DbUp 进行数据库迁移
         RunDbUpIfRequired();
+
         // 继承 测试单元基类 设置当前的生命周期范围
         SetupScope(CurrentScope);
     }
@@ -257,6 +263,7 @@ containerBuilder.RegisterInstance(Substitute.For<IMemoryCache>()).AsImplementedI
         // 该方法返回 false，并且不执行后续的数据库迁移代码
         if(!ShouldRunDbUpDatabases.GetValueOrDefault(_databaseName,true))
             return;
+
         // 如果数据库需要运行数据库迁移
         // 它创建一个 DbUpRunner 对象，并使用当前测试的配置 CurrentConfiguration 中的连接字符串进行初始化
         // 然后调用 Run() 方法执行数据库迁移
@@ -292,11 +299,13 @@ containerBuilder.RegisterInstance(Substitute.For<IMemoryCache>()).AsImplementedI
                         $"SELECT table_name FROM  INFORMATION_SCHEMA.tables WHERE table_schema = '{_databaseName}';",
                         connection)
                     .ExecuteReader();
+
             // 设置 MySQL 中的 SQL_SAFE_UPDATES 变量为 0
             // SQL_SAFE_UPDATES 控制 UPDATE 和 DELETE 语句的安全性
             // 当其为 1 时，UPDATE 和 DELETE 操作必须包含 WHERE 子句，以避免误操作
             // 将其设置为 0 允许在没有 WHERE 子句的情况下执行 UPDATE 和 DELETE
             deleteStatements.Add($"SET SQL_SAFE_UPDATES = 0");
+
             while (reader.Read())
             {
                 var table = reader.GetString(0);
@@ -400,6 +409,7 @@ public partial class UserQuestionsFixture : SmartFaqFixtureBase
     {
         // 测试单元 中 添加 数据的 方法
         await _smartFaqUtil.Add(2, UserQuestionStatus.Pending, 1);
+
         // 获取 测试数据库 的数据
        var beforeUpdateQuestions = await Run<IRepository, List<UserQuestion>>(
             async repository => await repository.Query<UserQuestion>().Where(x => updateQuestionIds.Contains(x.Id))
@@ -409,6 +419,7 @@ public partial class UserQuestionsFixture : SmartFaqFixtureBase
         foreach (var beforeUpdateQuestion in beforeUpdateQuestions)
         {
             var diffQuestion = beforeUpdateQuestions.Single(x => x.Id == beforeUpdateQuestion.Id);
+
             // 断言
             beforeUpdateQuestion.Status.ShouldBe(UserQuestionStatus.Annoying)(diffQuestion.Status);
             beforeUpdateQuestion.CorrectQid.ShouldBe(diffQuestion.CorrectQid);
