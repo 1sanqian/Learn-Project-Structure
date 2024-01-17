@@ -313,7 +313,7 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 
 ## Hangfrie 的多种类型的后台作业
 
-### Fire-and-forget
+### Fire-and-forget job
 
 Fire-and-forget job（一次性任务）： 仅执行一次，不需要等待结果
 + 无需等待：调用方不需要等待任务的完成，可以继续执行后续的代码
@@ -328,7 +328,7 @@ Fire-and-forget job（一次性任务）： 仅执行一次，不需要等待结
 var jobId = BackgroundJob.Enqueue(() => Console .WriteLine( "Fire-and-forget job executed! ));
 ```
 
-### Delayed
+### Delayed job
 
 Delayed jobs（延迟任务）：在指定时间后执行
 + 延迟执行：任务会在指定的延迟时间之后执行，而不是立即执行
@@ -343,7 +343,7 @@ Delayed jobs（延迟任务）：在指定时间后执行
 var jobId = BackgroundJob.Schedule(() => Console .WriteLine( "Delayed job executed!" ),TimeSpan.FromDays(7));
 ```
 
-### Recurring
+### Recurring job
 
 Recurring jobs（定期任务）：按照预定的时间间隔循环执行
 + 定期执行：任务会按照预定的时间间隔循环执行
@@ -358,7 +358,7 @@ Recurring jobs（定期任务）：按照预定的时间间隔循环执行
 RecurringJob.AddOrUpdate("Recurring job executed!" ,() => Console .WriteLine( "Recurring job executed!" ),Cron.Daily);
 ```
 
-### Continuations
+### Continuations job
 
 Continuations jobs(连续作业) ：任务会在另一个任务完成后自动触发执行
 + 依赖关系：Continuations 作业允许你创建任务之间的依赖关系，确保一个任务完成后，相关的任务会被触发执行
@@ -377,7 +377,7 @@ var parentJobId = BackgroundJob.Enqueue(() => 42);
 BackgroundJob.ContinueWith<int>(parentJobId, result => Console.WriteLine($"Continuation Job executed with result: {result}"));
 ```
 
-### Batches
+### Batches job
 
 Batches jobs (合并批次作业)：将多个任务组合成批次并一起执行的机制
 + 任务批次：Batches 允许你将多个任务组合成一个批次，以便一起执行
@@ -404,7 +404,7 @@ var batchId = BatchJob.StartNew(batch =>
 Console.WriteLine($"Batch ID: {batchId}");
 ```
 
-### Batch Continuations
+### Batch Continuations job
 
 Batch Continuations jobs(批次内连续作业)：允许一个批次中的任务完成后，自动触发另一个任务
 + 任务批次：Batch Continuations 允许你在一个批次中的任务完成后，自动触发另一个任务
