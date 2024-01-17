@@ -413,7 +413,7 @@ Batch Continuations jobs(批次内连续作业)：允许一个批次中的任务
 + Batch.ContinueBatchWith：用于在指定的批次完成后执行额外的操作
     + 接受一个回调函数，这个回调函数中可以使用参数添加新的任务到批次中
 
-#### 关键方法 Batch.ContinueBatchWith
+#### 关键方法 ContinueBatchWith
 
 ```
 // 创建批次
@@ -626,4 +626,5 @@ RecurringJob.AddOrUpdate("powerfuljob", () => Console.Write("Powerful!"), "0 12 
 Week 和 Day 存在互斥关系，不可以同时设定规则，如果一个设定规则了，另一个可以使用 ？ 来代表 "都可以"的意思
 
 Hangfire 官网： https://docs.hangfire.io/en/latest/getting-started/index.html
+
 Cron 官网：https://en.wikipedia.org/wiki/Cron#CRON_expression
