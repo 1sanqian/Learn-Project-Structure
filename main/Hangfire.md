@@ -272,13 +272,13 @@ public static class HangFireExtension
 ```
 
 + services.AddHangfire() :  使用 AddHangfire 方法来配置 Hangfire 的服务
-+ config.SetDataCompatibilityLevel() ：设置 Hangfire 存储的数据兼容性级别
++ .SetDataCompatibilityLevel() ：设置 Hangfire 存储的数据兼容性级别
 + .UseSimpleAssemblyNameTypeSerializer()：使用简单的程序集名称类型序列化器。这是一种用于序列化和反序列化 Hangfire 任务数据的方法
 + .UseRecommendedSerializerSettings()： 使用推荐的序列化器设置。这将使用推荐的序列化器选项进行配置
 + .UseStorage(): 使用 MySQL 存储
-+  new MySqlStorage()：使用 MySqlStorage 作为 存储方式
-+ configuration.GetConnectionString()  ：使用配置文件中 规范的数据库连接字符串用于连接到 MySQL 数据库        
-+ new MySqlStorageOptions(): 用于配置或设置与 MySql 存储相关的选项
++  MySqlStorage：MySqlStorage 的 存储方式
++ .GetConnectionString()  ：使用配置文件中 规范的数据库连接字符串用于连接到 MySQL 数据库        
++ MySqlStorageOptions: 用于配置或设置与 MySql 存储相关的选项
 + QueuePollInterval: 队列轮询间隔
 + JobExpirationCheckInterval：作业过期检查间隔
 + CountersAggregateInterval：计数器聚合间隔
@@ -624,6 +624,8 @@ RecurringJob.AddOrUpdate("powerfuljob", () => Console.Write("Powerful!"), "0 12 
 可以指定每n个时间间隔*/n运行一次
 
 Week 和 Day 存在互斥关系，不可以同时设定规则，如果一个设定规则了，另一个可以使用 ？ 来代表 "都可以"的意思
+
+备注：本文知识点存在局限性，若有不正之处还请斧正
 
 Hangfire 官网： https://docs.hangfire.io/en/latest/getting-started/index.html
 
