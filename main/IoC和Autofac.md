@@ -346,7 +346,7 @@ class Program
     
         // 从容器中解析所需的对象
         using (var scope = container.BeginLifetimeScope())
-        {ß
+        {
             var car = scope.Resolve<ICar>();
     
             // 使用汽车对象
