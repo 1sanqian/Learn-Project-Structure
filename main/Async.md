@@ -4,7 +4,7 @@
 
 同步是按照程序流由上到下的方式顺序执行程序，必须等待程序上一步的操作执行完，才可以执行下一步程序
 
-异步是在遇到特定的异步修饰符时，不会等待方法完成，而是直接进入下一个方法或程序中，可在异步操作执行时继续执行，执行方法是无序的，且执行的速度也比较快。实质：异步操作，启动了新的线程，主线程与方法线程并行执行
+异步是在遇到特定的异步修饰符时，不会等待方法完成，而是直接进入下一个方法或程序中，可在异步操作执行时继续执行，执行方法是无序的，且执行的速度也比较快。
 
 1. 异步修饰符[Async](https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/)和等待修饰符[Await](https://learn.microsoft.com/en-us/dotnet/visual-basic/language-reference/error-messages/bc42358)
 
