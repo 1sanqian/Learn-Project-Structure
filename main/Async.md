@@ -23,6 +23,7 @@
 
 在有 async修饰的异步方法中，该方法同步运行，直到到达第一个Await，此时它会挂起，直到等待的任务完成。同时，控制权返回给方法的调用者。如果该方法不包含Await表达式或语句，则该方法不会挂起并像同步方法一样执行。在有 async修饰的异步方法中没有使用await,编译器警告会提醒您任何不包含的异步方法，Await因为这种情况可能表明存在错误。有关详细信息，请参阅[编译器错误](https://learn.microsoft.com/en-us/dotnet/visual-basic/language-reference/error-messages/bc42358)
 
+关于同异步，单多线程，并行并发，可参考：https://github.com/1sanqian/Learn-Project-Structure/blob/main/main/Synchronous%20asynchronous,%20single%20threaded%20multi-threaded,%20concurrent%20parallel.md
 # 二、 异步编程工作原理
 
 C# 中的async和await关键字是异步编程的核心。通过使用这两个关键字，您可以使用 .NET Framework、.NET Core 或 Windows 运行时中的资源来创建异步方法，几乎与创建同步方法一样轻松。使用关键字定义的异步方法称为异步方法，如以下方法
