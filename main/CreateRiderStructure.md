@@ -10,6 +10,10 @@ Rider是一款由JetBrains开发的集成开发环境（IDE），主要用于开
 
 构建如上图所示的基本项目
 
+jetbider 项目更新后，改由这样创建项目
+![image.png](https://upload-images.jianshu.io/upload_images/29476859-699317aa63585fa6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![企业微信截图_8bd7df82-24a5-461e-b5fd-c67ec81dd322.png](https://upload-images.jianshu.io/upload_images/29476859-a66218f8d3acf48f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 ### 1.构建PractiseForFreya应用程序
 
 新建解决方案Xamarin下的应用程序，文件名字为PractiseForFreya，同时删除无用且多余的文件，仅留下PractiseForFreya空文件和对应的 *.sln文件（访达可以看见)*
@@ -17,10 +21,6 @@ Rider是一款由JetBrains开发的集成开发环境（IDE），主要用于开
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-f376d6c4c3f07e86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 2.构建Facade,Libraries,Tests解决方案项目文件
-
-jetbider 项目更新后，改由这样创建项目
-![image.png](https://upload-images.jianshu.io/upload_images/29476859-699317aa63585fa6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-![企业微信截图_8bd7df82-24a5-461e-b5fd-c67ec81dd322.png](https://upload-images.jianshu.io/upload_images/29476859-a66218f8d3acf48f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 在PractiseForFreya的文件下新建src目录下
 
