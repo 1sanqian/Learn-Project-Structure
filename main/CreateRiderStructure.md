@@ -10,7 +10,7 @@ Rider是一款由JetBrains开发的集成开发环境（IDE），主要用于开
 
 构建如上图所示的基本项目
 
-jetbider 项目更新后，改由这样创建项目
+JetBrains Rider 项目更新后，改由这样创建项目
 ![image.png](https://upload-images.jianshu.io/upload_images/29476859-699317aa63585fa6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ![企业微信截图_8bd7df82-24a5-461e-b5fd-c67ec81dd322.png](https://upload-images.jianshu.io/upload_images/29476859-a66218f8d3acf48f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
