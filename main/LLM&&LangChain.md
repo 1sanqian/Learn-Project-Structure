@@ -11,6 +11,7 @@ VectorStore：向量库（例如 FAISS）
  ## 🌟1. LLMChain：基础链
 
 这是最基础的“链”，功能是：
+
 👉 用提示词（Prompt） + LLM（大模型）来生成答案。
 
 📦 构成：
