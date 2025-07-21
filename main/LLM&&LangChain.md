@@ -7,7 +7,7 @@ ConversationChain：对话链
 RetrievalQA：文档问答入口
 VectorStore：向量库（例如 FAISS）
 
-+ [RAG 教程]([https://python.langchain.com/v0.1/docs/use_cases/question_answering/)
++ [RAG 教程](https://python.langchain.com/v0.1/docs/use_cases/question_answering/)
  ## 🌟1. LLMChain：基础链
 
 这是最基础的“链”，功能是：
