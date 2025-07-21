@@ -1,4 +1,4 @@
-#**LangChain 官方文档（中文/英文）（https://docs.langchain.com）**
+# **LangChain 官方文档（中文/英文）（https://docs.langchain.com）**
 
 + 关键模块要点：
  LLMChain：基础链
@@ -40,7 +40,7 @@ result = chain.run("人工智能")
 print(result)
 ```
 
-##🧩 2. PromptTemplate：提示词模板
+## 🧩 2. PromptTemplate：提示词模板
 
 👉 就是“给大模型说话用的提示词”，像你平时和我说：“请生成一段介绍xx的文字”。
 
@@ -75,7 +75,7 @@ print(conversation.run("我想了解人工智能。"))
 print(conversation.run("它会取代人类工作吗？"))
 ```
 
-##📄 4. RetrievalQA：文档问答链
+## 📄 4. RetrievalQA：文档问答链
 
 👉 把本地文档做成问答系统，比如：“上传公司手册 → 问它公司请假制度”。
 
