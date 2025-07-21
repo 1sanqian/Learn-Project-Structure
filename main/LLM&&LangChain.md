@@ -55,7 +55,7 @@ prompt = PromptTemplate.from_template(template)
 print(prompt.format(concept="量子计算"))
 ```
 
-##🗣️ 3. ConversationChain：对话链
+## 🗣️ 3. ConversationChain：对话链
 
 👉 让模型可以记住你之前说过什么，形成上下文连续的对话。
 
