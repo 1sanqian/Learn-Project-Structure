@@ -1,4 +1,4 @@
-# **[LangChain 官方文档（中文/英文）]（https://docs.langchain.com）**
+# **[LangChain 官方文档（中文/英文）](https://docs.langchain.com)**
 
 + 关键模块要点：
  LLMChain：基础链
