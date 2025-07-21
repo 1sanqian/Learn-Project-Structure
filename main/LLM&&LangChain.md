@@ -8,6 +8,7 @@ RetrievalQA：文档问答入口
 VectorStore：向量库（例如 FAISS）
 
 + [RAG 教程](https://python.langchain.com/v0.1/docs/use_cases/question_answering/)
+
  ## 🌟1. LLMChain：基础链
 
 这是最基础的“链”，功能是：
@@ -15,11 +16,15 @@ VectorStore：向量库（例如 FAISS）
 👉 用提示词（Prompt） + LLM（大模型）来生成答案。
 
 📦 构成：
+
 PromptTemplate（提示词模板）
+
 LLM（比如 OpenAI、通义千问、ChatGLM 等）
+
 LLMChain = 把上面两个组合起来运行
 
 📌 示例代码：
+
 ```
 from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
@@ -45,6 +50,7 @@ print(result)
 👉 就是“给大模型说话用的提示词”，像你平时和我说：“请生成一段介绍xx的文字”。
 
 📌 示例代码：
+
 ```
 from langchain.prompts import PromptTemplate
 
@@ -60,6 +66,7 @@ print(prompt.format(concept="量子计算"))
 👉 让模型可以记住你之前说过什么，形成上下文连续的对话。
 
 📌 示例代码：
+
 ```
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
@@ -80,6 +87,7 @@ print(conversation.run("它会取代人类工作吗？"))
 👉 把本地文档做成问答系统，比如：“上传公司手册 → 问它公司请假制度”。
 
 📌 示例代码：
+
 ```
 #假设你已经有一个 PDF 文档或 txt 文件。
 from langchain.document_loaders import TextLoader
@@ -114,6 +122,8 @@ print(qa.run("公司请假流程是什么？"))
 比如：你问“休假规则”，它可以从向量库里找到最相关的段落内容，再丢给 LLM 回答你。
 
 常用向量库：
+
 本地：FAISS、Chroma
+
 云端：Pinecone、Weaviate
 
