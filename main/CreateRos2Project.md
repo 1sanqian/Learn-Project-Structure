@@ -41,8 +41,9 @@ ros2 pkg create： 是ROS2 自带的命令，用来新建一个包，包是 ROS2
 - 配置文件
 
 --build-type ament_cmake：
-ament_cmake → 如果你写的是 C++ 节点
-ament_python → 如果你写的是 Python 节点
+- ament_cmake → 如果你写的是 C++ 节点
+- ament_python → 如果你写的是 Python 节点
+
 若主要用python，可以换成：ros2 pkg create --build-type ament_python my_first_pkg
 
 ⚠️ 如果源代码兼用 python 和 C++ 语言，有两种方法可以实现
@@ -69,8 +70,8 @@ my_first_pkg/
 └── setup.py               # Python 构建配置
 ```
 
-my_first_pkg
-这是包的名字（自取）。
+my_first_pkg:这是包的名字（自取）
+
 通过 ros2 run my_first_pkg xxx_node 来运行这个包里的程序
 
  ### 3）编译
