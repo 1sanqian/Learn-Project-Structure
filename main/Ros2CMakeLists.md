@@ -45,7 +45,7 @@ ament_package()
 
 ## 2. 解读文件
 
-1. cmake_minimum_required(VERSION 3.8)
+### 1. cmake_minimum_required(VERSION 3.8)
 
 指定编译时需要的 最低 CMake 版本。
 
@@ -53,13 +53,13 @@ ament_package()
 
 👉 确保你系统上的 CMake 版本不低于这个值。
 
-2. project(robot)
+### 2. project(robot)
 
 定义这个工程的名字叫 robot。
 
 以后生成的可执行文件会放到 install/robot/... 下面。
 
-3. 编译器选项
+### 3. 编译器选项
 
 ```
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -75,7 +75,7 @@ endif()
 
 -Wpedantic → 严格按照标准检查。
 
-4. 查找依赖
+### 4. 查找依赖
 
 find_package(rclcpp REQUIRED)
 
@@ -83,13 +83,13 @@ find_package(rclcpp REQUIRED)
 
 REQUIRED 表示找不到就报错。
 
-5. 定义可执行文件
+### 5. 定义可执行文件
    
 add_executable(hello_node src/hello_node.cpp)
 
 把 src/hello_node.cpp 编译成一个可执行文件，名字叫 hello_node。
 
-6. 关联依赖
+### 6. 关联依赖
    
 ament_target_dependencies(hello_node rclcpp)
 
@@ -97,7 +97,7 @@ ament_target_dependencies(hello_node rclcpp)
 
 没这个步骤，代码里用到的 ROS2 API 就会链接失败。
 
-7. 安装规则
+### 7. 安装规则
 
 ```
 install(TARGETS
@@ -111,7 +111,7 @@ install(TARGETS
 
 ros2 run robot hello_node
 
-8. 测试相关（可选）
+### 8. 测试相关（可选）
 
 ```
 if(BUILD_TESTING)
@@ -124,7 +124,7 @@ endif()
 
 如果开启了测试，会自动检查代码风格、版权声明等.
 
-9. ament_package()
+### 9. ament_package()
 
 必须要有的收尾语句。
 
