@@ -5,9 +5,39 @@
 3. 动作就是 → 打印 "Hello, Robot!"。
 4. 程序运行后，终端会每秒看到：[INFO] [hello_node]: Hello, Robot!
 
+借以下文件为例解读代码，了解脚本文件大致结构：
+
+```
+#include "rclcpp/rclcpp.hpp"   // ROS2 C++ API
+
+class HelloNode : public rclcpp::Node
+{
+public:
+    HelloNode() : Node("hello_node")   // 节点名字：hello_node
+    {
+        // 每秒打印一次日志
+        timer_ = this->create_wall_timer(
+            std::chrono::seconds(1),
+            [this]() { RCLCPP_INFO(this->get_logger(), "Hello, Robot!"); });
+    }
+
+private:
+    rclcpp::TimerBase::SharedPtr timer_;
+};
+
+int main(int argc, char **argv)
+{
+    rclcpp::init(argc, argv);               // 初始化 ROS2
+    rclcpp::spin(std::make_shared<HelloNode>()); // 运行节点
+    rclcpp::shutdown();                     // 关闭
+    return 0;
+}
+```
+
+
 ## 解读
 
-1. 引入 ROS2 C++ API 的头文件
+### 1. 引入 ROS2 C++ API 的头文件
 
 ```
 #include "rclcpp/rclcpp.hpp"   // ROS2 C++ API
@@ -18,7 +48,7 @@
 没它就用不了 ROS2 的功能，比如节点、话题、定时器
 
 
-2. 定义一个类 HelloNode
+### 2. 定义一个类 HelloNode
 
 ```
 class HelloNode : public rclcpp::Node
@@ -41,7 +71,7 @@ HelloNode() → 构造函数（对象创建时自动调用）。
 
 👉 启动后 ROS2 系统里会有一个叫 hello_node 的节点。
 
-3. 创建一个 定时器
+### 3. 创建一个 定时器
 
 ```
 {
@@ -64,7 +94,7 @@ RCLCPP_INFO(...) → 打印 ROS2 日志，内容是 "Hello, Robot!"。
 
 👉 效果：每 1 秒输出一行日志。
 
-4. 定义一个私有变量
+### 4. 定义一个私有变量
 
 ```
 private:
@@ -79,7 +109,7 @@ private:
 
 👉 没有这个变量，定时器一创建完就没了。
 
-5. C++ 程序的入口函数
+### 5. C++ 程序的入口函数
 
 ```
 int main(int argc, char **argv)
