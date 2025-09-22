@@ -16,7 +16,7 @@
 
 ### 话题（Topic）
 
-- 发布者（Publisher）
+#### 1. 发布者（Publisher）
 
 节点把数据打包成消息，通过某个话题发布出去。
 
@@ -34,7 +34,7 @@ msg.angular.z = 0.0;
 publisher_->publish(msg);
 ```
 
-- 订阅者（Subscriber）
+#### 2. 订阅者（Subscriber）
 
 节点订阅某个话题，接收消息并做处理。
 
