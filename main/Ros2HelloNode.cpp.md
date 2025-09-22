@@ -34,6 +34,7 @@ int main(int argc, char **argv)
 }
 ```
 
+运行：通过 ros2 run my_first_pkg（项目名） xxx_node（配置的节点名） 来运行这个包里的程序
 
 ## 解读
 
